@@ -1,0 +1,11 @@
+{
+    "name": "WDOC",
+    "main": "http://127.0.0.1:17860/",
+    "node-remote":["http://127.0.0.1:17860","file:///"],
+    "chromium-args":"--disable-gpu",
+    "inject_js_end":"main.js",
+    "webkit": {
+         "page-cache":false
+    }
+    
+}

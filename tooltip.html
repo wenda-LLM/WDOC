@@ -1,0 +1,82 @@
+<html>
+
+<head>
+	<title>wd-office</title>
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=600,  user-scalable=no">
+	<script src="static/vue.js"></script>
+
+	<style>
+		html {
+			padding: 15px;
+			overflow: hidden;
+			background: transparent;
+			user-select: none;
+		}
+
+		#app,
+		.v-application--wrap {
+			background: transparent;
+			min-height: inherit;
+		}
+
+		pre {
+			opacity: 0.9;
+			app-region: drag;
+			padding: 10px;
+			background: white;
+			border-radius: 5px;
+			white-space: break-spaces;
+			word-wrap: break-word;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<v-app>
+			<div v-if="content">
+				<b style="
+					color: red;
+					position: absolute;
+					right: 5px;
+					top: 5px;
+					background: gray;
+					border-radius: 23px;
+					padding: 8px;
+					line-height: 0.9;
+				" @click="close_window()">X</b>
+				<pre>{{content}}</pre>
+			</div>
+		</v-app>
+	</div>
+	<script>
+
+		app = new Vue({
+			el: '#app',
+			data: () => ({
+				content: ""
+			}),
+			methods: {
+
+
+			}
+		})
+		w = nw.Window.get()
+		w.setAlwaysOnTop(true)
+		w.setShowInTaskbar(false)
+		gui = require('nw.gui')
+		gui.Window.getAll(l => window.abort_chatting = l[0].window.abort_chatting)
+		close_window = () => {
+			setTimeout(() => {
+				app.content = ''
+			}, 100)
+			abort_chatting()
+		}
+	</script>
+</body>
+
+</html>
