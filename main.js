@@ -44,6 +44,22 @@ const server = http.createServer((req, res) => {
             res.end(kownladge)
 
         })
+    } else if (url === '/raw' && method === 'POST') { // request请求命中路由2
+        let bodyStr = ''
+        req.on('data', (chunk) => {
+            bodyStr += chunk
+        })
+        req.on('end', async () => {
+            console.log(bodyStr)
+            try {
+
+                res.end(await send("raw!"+bodyStr))
+            } catch (error) {
+                res.end(tooltip_window.app.content)
+            }
+            setTimeout(() => set_tooltip(""), 2000)
+
+        })
     } else { // request请求未命中以上路由
         res.end('404')
     }
