@@ -21,7 +21,7 @@ const server = http.createServer((req, res) => {
             console.log(bodyStr)
             try {
 
-                res.end(await rtst_客服(bodyStr.replace(/[\r\n]+/g, '\n')))
+                res.end(await rtst_客服(bodyStr.replace(/\v/g,'\n').replace(/[\r\n]+/g, '\n')))
             } catch (error) {
                 res.end(tooltip_window.app.content)
             }
@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', async () => {
             console.log(bodyStr)
-            kownladge = (await find(bodyStr, app.zsk_step)).filter(i => !i.score || i.score < 170).map(i => ({
+            kownladge = (await find(bodyStr.replace(/\v/g,'\n'), app.zsk_step)).filter(i => !i.score || i.score < 170).map(i => ({
                 title: get_title_form_md(i.title),
                 url: get_url_form_md(i.title),
                 content: i.content
@@ -50,10 +50,9 @@ const server = http.createServer((req, res) => {
             bodyStr += chunk
         })
         req.on('end', async () => {
-            console.log(bodyStr)
             try {
 
-                res.end(await send("raw!"+bodyStr))
+                res.end(await send("raw!"+bodyStr.replace(/\v/g,'\n')))
             } catch (error) {
                 res.end(tooltip_window.app.content)
             }
